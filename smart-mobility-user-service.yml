@@ -13,12 +13,15 @@ spring:
 
   # --- Base de données (valeurs surchargeables par profil) ---
   datasource:
-    url: ${USER_DB_URL:jdbc:h2:mem:userdb}
-    username: ${USER_DB_USER:sa}
+    url: ${USER_DB_URL:jdbc:mysql://localhost:3306/userdb?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true}
+    username: ${USER_DB_USER:root}
     password: ${USER_DB_PASSWORD:}
-    driver-class-name: org.h2.Driver
+    driver-class-name: com.mysql.cj.jdbc.Driver
 
   jpa:
     hibernate:
       ddl-auto: update
     show-sql: false
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQLDialect
