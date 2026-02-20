@@ -1,0 +1,23 @@
+# ============================================================
+# Fichier de configuration global – Smart Mobility Platform
+# Chaque microservice hérite de ces valeurs par défaut.
+# Les valeurs spécifiques au service sont dans son propre fichier
+# (ex. eureka-mobility-service-registry.yml).
+# ============================================================
+
+# --- Serveur Eureka (adresse commune à tous les clients) ---
+eureka:
+  client:
+    # URL de l'annuaire Eureka que chaque service utilisera pour s'enregistrer
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+
+# --- Actuator : exposer les endpoints health & info par défaut ---
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+  endpoint:
+    health:
+      show-details: always

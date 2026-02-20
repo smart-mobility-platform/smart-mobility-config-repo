@@ -1,0 +1,42 @@
+# ============================================================
+# Configuration du Service Registry (Eureka Server)
+# Nom du service : eureka-mobility-service-registry
+# Port           : 8761  (port Eureka standard)
+# ============================================================
+
+server:
+  port: 8761
+
+spring:
+  application:
+    name: eureka-mobility-service-registry
+
+# --- Paramètres du serveur Eureka ---
+eureka:
+  instance:
+    hostname: localhost
+
+  client:
+    # Un serveur Eureka ne s'enregistre pas lui-même
+    register-with-eureka: false
+    # Un serveur Eureka ne récupère pas le registre d'un autre Eureka
+    fetch-registry: false
+    service-url:
+      defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/
+
+  server:
+    # Désactive la protection automatique en développement pour éviter
+    # que de vieux enregistrements « fantômes » restent visibles
+    enable-self-preservation: false
+    # Ne pas attendre d'autres Eureka peers avant d'accepter des requêtes
+    wait-time-in-ms-when-sync-empty: 0
+
+# --- Actuator : endpoints supplémentaires utiles pour le monitoring ---
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,env,metrics
+  endpoint:
+    health:
+      show-details: always

@@ -1,0 +1,24 @@
+# ============================================================
+# Configuration du Pricing & Discount Service
+# Nom du service : smart-mobility-pricing-service
+# Port           : 8083
+# ============================================================
+
+server:
+  port: 8083
+
+spring:
+  application:
+    name: smart-mobility-pricing-service
+
+# --- Règles tarifaires (centralisées ici pour modification sans redéploiement) ---
+pricing:
+  # Tarif de base en FCFA
+  base-fare: 500
+  # Réduction pour les heures creuses (20 %)
+  off-peak-discount: 0.20
+  # Plafond journalier en FCFA
+  daily-cap: 3000
+  # Réduction de fidélité à partir de N trajets par mois
+  loyalty-threshold: 20
+  loyalty-discount: 0.15

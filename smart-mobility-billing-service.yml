@@ -1,0 +1,27 @@
+# ============================================================
+# Configuration du Billing Service
+# Nom du service : smart-mobility-billing-service
+# Port           : 8084
+# ============================================================
+
+server:
+  port: 8084
+
+spring:
+  application:
+    name: smart-mobility-billing-service
+
+  datasource:
+    url: ${BILLING_DB_URL:jdbc:h2:mem:billingdb}
+    username: ${BILLING_DB_USER:sa}
+    password: ${BILLING_DB_PASSWORD:}
+    driver-class-name: org.h2.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: false
+
+# --- Seuil d'alerte solde faible (en FCFA) ---
+billing:
+  low-balance-threshold: 500
