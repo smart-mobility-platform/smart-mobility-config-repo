@@ -13,7 +13,7 @@ spring:
 
   # --- Base de données (valeurs surchargeables par profil) ---
   datasource:
-    url: ${USER_DB_URL:jdbc:mysql://localhost:3306/userdb?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true}
+    url: ${USER_DB_URL:jdbc:mysql://localhost:3306/user_db?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true}
     username: ${USER_DB_USER:root}
     password: ${USER_DB_PASSWORD:}
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -25,3 +25,14 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.MySQLDialect
+
+  # --- Sécurité : OAuth2 Resource Server (Keycloak) ---
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          # URI d'émission des tokens Keycloak.
+          # Spring Security télécharge automatiquement le JWKS depuis
+          # {issuer-uri}/.well-known/openid-configuration pour valider les JWT.
+          issuer-uri: ${KEYCLOAK_ISSUER_URI:http://localhost:9090/realms/smart-mobility}
+
