@@ -1,0 +1,41 @@
+# ============================================================
+# Configuration de l'API Gateway
+# Nom du service : smart-mobility-api-gateway
+# Port           : 8765  (point d'entrée unique de la plateforme)
+# ============================================================
+
+server:
+  port: 8765
+
+spring:
+  application:
+    name: smart-mobility-api-gateway
+
+  cloud:
+    gateway:
+      # --- Routes vers chaque microservice ---
+      routes:
+        - id: user-service-route
+          uri: lb://smart-mobility-user-service
+          predicates:
+            - Path=/api/users/**, /api/passes/**
+
+        - id: trip-service-route
+          uri: lb://smart-mobility-trip-service
+          predicates:
+            - Path=/api/trips/**
+
+        - id: pricing-service-route
+          uri: lb://smart-mobility-pricing-service
+          predicates:
+            - Path=/api/pricing/**
+
+        - id: billing-service-route
+          uri: lb://smart-mobility-billing-service
+          predicates:
+            - Path=/api/billing/**
+
+        - id: notification-service-route
+          uri: lb://smart-mobility-notification-service
+          predicates:
+            - Path=/api/notifications/**

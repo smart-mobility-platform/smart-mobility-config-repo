@@ -1,0 +1,27 @@
+# ============================================================
+# Configuration du Pricing & Discount Service
+# Nom du service : smart-mobility-pricing-service
+# Port           : 8083
+# ============================================================
+
+server:
+  port: 8083
+
+spring:
+  application:
+    name: smart-mobility-pricing-service
+
+  datasource:
+    url: ${PRICING_DB_URL:jdbc:mysql://localhost:3306/pricingdb?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true}
+    username: ${PRICING_DB_USER:root}
+    password: ${PRICING_DB_PASSWORD:}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: false
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQLDialect
+
