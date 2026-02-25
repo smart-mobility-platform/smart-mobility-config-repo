@@ -1,11 +1,11 @@
 # ============================================================
-# Configuration de l'API Gateway
+# Configuration de l'API Gateway — fournie par le Config Server
 # Nom du service : smart-mobility-api-gateway
-# Port           : 8765  (point d'entrée unique de la plateforme)
+# Port           : 9000  (point d'entrée unique de la plateforme)
 # ============================================================
 
 server:
-  port: 8765
+  port: 9000
 
 spring:
   application:
@@ -13,29 +13,89 @@ spring:
 
   cloud:
     gateway:
+      discovery:
+        locator:
+          enabled: true
+          lower-case-service-id: true
+
+      # --- CORS global ---
+      globalcors:
+        cors-configurations:
+          '[/**]':
+            allowedOriginPatterns: "*"
+            allowedMethods:
+              - GET
+              - POST
+              - PUT
+              - DELETE
+              - OPTIONS
+            allowedHeaders: "*"
+            allowCredentials: true
+
       # --- Routes vers chaque microservice ---
       routes:
         - id: user-service-route
           uri: lb://smart-mobility-user-service
           predicates:
-            - Path=/api/users/**, /api/passes/**
+            - Path=/api/users/**, /api/mobility-pass/**
+          filters:
+            - name: CircuitBreaker
+              args:
+                name: userServiceCB
+                fallbackUri: forward:/fallback/user-service
 
         - id: trip-service-route
           uri: lb://smart-mobility-trip-service
           predicates:
             - Path=/api/trips/**
+          filters:
+            - name: CircuitBreaker
+              args:
+                name: tripServiceCB
+                fallbackUri: forward:/fallback/trip-service
 
         - id: pricing-service-route
           uri: lb://smart-mobility-pricing-service
           predicates:
             - Path=/api/pricing/**
+          filters:
+            - name: CircuitBreaker
+              args:
+                name: pricingServiceCB
+                fallbackUri: forward:/fallback/pricing-service
 
         - id: billing-service-route
           uri: lb://smart-mobility-billing-service
           predicates:
             - Path=/api/billing/**
+          filters:
+            - name: CircuitBreaker
+              args:
+                name: billingServiceCB
+                fallbackUri: forward:/fallback/billing-service
 
         - id: notification-service-route
           uri: lb://smart-mobility-notification-service
           predicates:
             - Path=/api/notifications/**
+          filters:
+            - name: CircuitBreaker
+              args:
+                name: notificationServiceCB
+                fallbackUri: forward:/fallback/notification-service
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+  instance:
+    prefer-ip-address: true
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: always

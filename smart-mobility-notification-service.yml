@@ -1,11 +1,11 @@
 # ============================================================
 # Configuration du Notification Service
 # Nom du service : smart-mobility-notification-service
-# Port           : 8085
+# Port           : 8086
 # ============================================================
 
 server:
-  port: 8085
+  port: 8086
 
 spring:
   application:
