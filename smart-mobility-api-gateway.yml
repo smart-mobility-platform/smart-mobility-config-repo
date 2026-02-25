@@ -49,6 +49,7 @@ spring:
           predicates:
             - Path=/api/trips/**
           filters:
+            - RewritePath=/api/(?<remaining>.*), /${remaining}
             - name: CircuitBreaker
               args:
                 name: tripServiceCB
@@ -57,8 +58,9 @@ spring:
         - id: pricing-service-route
           uri: lb://smart-mobility-pricing-service
           predicates:
-            - Path=/api/pricing/**
+            - Path=/api/pricing/**, /api/fare-rules/**, /api/discounts/**
           filters:
+            - RewritePath=/api/(?<remaining>.*), /${remaining}
             - name: CircuitBreaker
               args:
                 name: pricingServiceCB
@@ -69,6 +71,7 @@ spring:
           predicates:
             - Path=/api/billing/**
           filters:
+            - RewritePath=/api/(?<remaining>.*), /${remaining}
             - name: CircuitBreaker
               args:
                 name: billingServiceCB
@@ -83,6 +86,17 @@ spring:
               args:
                 name: notificationServiceCB
                 fallbackUri: forward:/fallback/notification-service
+
+        - id: network-service-route
+          uri: lb://smart-mobility-network-service
+          predicates:
+            - Path=/api/network/**
+          filters:
+            - RewritePath=/api/network/(?<remaining>.*), /${remaining}
+            - name: CircuitBreaker
+              args:
+                name: networkServiceCB
+                fallbackUri: forward:/fallback/network-service
 
 eureka:
   client:
@@ -99,3 +113,5 @@ management:
   endpoint:
     health:
       show-details: always
+    gateway:
+      enabled: true
