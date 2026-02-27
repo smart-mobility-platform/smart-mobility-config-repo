@@ -30,7 +30,14 @@ spring:
               - DELETE
               - OPTIONS
             allowedHeaders: "*"
-            allowCredentials: true
+            allowCredentials: false
+
+      # --- Filtre par défaut : dédoublonner les en-têtes CORS ---
+      # Le gateway et les microservices ajoutent chacun Access-Control-Allow-Origin,
+      # ce qui produit une valeur dupliquée (ex. "null, null"). Ce filtre ne conserve
+      # que la première occurrence avant d'envoyer la réponse au client.
+      default-filters:
+        - DedupeResponseHeader=Access-Control-Allow-Credentials Access-Control-Allow-Origin
 
       # --- Routes vers chaque microservice ---
       routes:
