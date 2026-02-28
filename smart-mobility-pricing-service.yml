@@ -36,3 +36,38 @@ pricing:
   # Réduction de fidélité à partir de N trajets par mois
   loyalty-threshold: 20
   loyalty-discount: 0.15
+
+# --- Resilience4j : activer le circuit breaker Feign ---
+feign:
+  circuitbreaker:
+    enabled: true
+
+resilience4j:
+  circuitbreaker:
+    configs:
+      default:
+        slidingWindowSize: 5
+        permittedNumberOfCallsInHalfOpenState: 2
+        waitDurationInOpenState: 10s
+        failureRateThreshold: 50
+        registerHealthIndicator: true
+    instances:
+      smart-mobility-network-service:
+        baseConfig: default
+  retry:
+    configs:
+      default:
+        maxAttempts: 3
+        waitDuration: 500ms
+    instances:
+      smart-mobility-network-service:
+        baseConfig: default
+
+management:
+  health:
+    circuitbreakers:
+      enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: health,info,circuitbreakers
