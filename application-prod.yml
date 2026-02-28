@@ -1,0 +1,24 @@
+# ============================================================
+# Profil PROD — configuration globale
+# Toutes les valeurs sensibles sont injectées via variables
+# d'environnement ; aucune valeur par défaut codée en dur.
+# ============================================================
+
+eureka:
+  client:
+    service-url:
+      defaultZone: ${EUREKA_URL:http://eureka-server:8761/eureka/}
+
+management:
+  tracing:
+    sampling:
+      probability: ${ZIPKIN_SAMPLING_PROBABILITY:0.1}
+  zipkin:
+    tracing:
+      endpoint: ${ZIPKIN_BASE_URL}/api/v2/spans
+
+logging:
+  level:
+    root: WARN
+    com.smartmobility: INFO
+    org.springframework: WARN

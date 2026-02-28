@@ -1,0 +1,13 @@
+# ============================================================
+# Profil DEV — Eureka Service Registry
+# ============================================================
+
+eureka:
+  server:
+    enable-self-preservation: false
+    wait-time-in-ms-when-sync-empty: 0
+
+logging:
+  level:
+    com.netflix.eureka: DEBUG
+    com.netflix.discovery: DEBUG

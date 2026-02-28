@@ -1,0 +1,29 @@
+# ============================================================
+# Profil PROD — Billing Service
+# Toutes les valeurs sensibles via variables d'environnement.
+# ============================================================
+
+spring:
+  datasource:
+    url: ${BILLING_DB_URL}
+    username: ${BILLING_DB_USER}
+    password: ${BILLING_DB_PASSWORD}
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    show-sql: false
+
+billing:
+  low-balance-threshold: ${BILLING_LOW_BALANCE_THRESHOLD:500}
+
+resilience4j:
+  circuitbreaker:
+    configs:
+      default:
+        slidingWindowSize: 10
+        waitDurationInOpenState: 15s
+
+logging:
+  level:
+    com.smartmobility.billing: INFO
+    org.hibernate.SQL: WARN
