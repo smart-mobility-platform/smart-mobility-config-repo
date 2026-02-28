@@ -1,0 +1,23 @@
+# ============================================================
+# Profil DEV — Notification Service
+# Utilise MailDev/MailHog en local (port 1025) pour
+# intercepter les e-mails sans les envoyer réellement.
+# ============================================================
+
+spring:
+  mail:
+    host: localhost
+    port: 1025
+    username:
+    password:
+    properties:
+      mail:
+        smtp:
+          auth: false
+          starttls:
+            enable: false
+
+logging:
+  level:
+    com.smartmobility.notification: DEBUG
+    org.springframework.mail: DEBUG

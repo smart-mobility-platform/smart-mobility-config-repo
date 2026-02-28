@@ -1,0 +1,22 @@
+# ============================================================
+# Profil TEST — configuration globale
+# Base de données H2 en mémoire, Eureka désactivé,
+# logs plus verbeux pour faciliter le débogage des tests.
+# ============================================================
+
+eureka:
+  client:
+    enabled: false
+    register-with-eureka: false
+    fetch-registry: false
+
+management:
+  tracing:
+    sampling:
+      probability: 0.0
+
+logging:
+  level:
+    root: WARN
+    com.smartmobility: DEBUG
+    org.springframework: WARN
