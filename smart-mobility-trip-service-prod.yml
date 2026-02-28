@@ -1,0 +1,30 @@
+# ============================================================
+# Profil PROD — Trip Service
+# ============================================================
+
+spring:
+  datasource:
+    url: ${TRIP_DB_URL}
+    username: ${TRIP_DB_USER}
+    password: ${TRIP_DB_PASSWORD}
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    show-sql: false
+
+resilience4j:
+  circuitbreaker:
+    configs:
+      default:
+        slidingWindowSize: 10
+        waitDurationInOpenState: 15s
+  retry:
+    configs:
+      default:
+        maxAttempts: 3
+        waitDuration: 1s
+
+logging:
+  level:
+    com.smartmobility.trip: INFO
+    org.hibernate.SQL: WARN

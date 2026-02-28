@@ -1,0 +1,18 @@
+# ============================================================
+# Profil PROD — Network Service
+# ============================================================
+
+spring:
+  datasource:
+    url: ${NETWORK_DB_URL}
+    username: ${NETWORK_DB_USER}
+    password: ${NETWORK_DB_PASSWORD}
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    show-sql: false
+
+logging:
+  level:
+    com.smartmobility.network: INFO
+    org.hibernate.SQL: WARN
