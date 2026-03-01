@@ -30,7 +30,7 @@ spring:
               - DELETE
               - OPTIONS
             allowedHeaders: "*"
-            allowCredentials: false
+            allowCredentials: true
 
       # --- Filtre par défaut : dédoublonner les en-têtes CORS ---
       # Le gateway et les microservices ajoutent chacun Access-Control-Allow-Origin,
@@ -104,6 +104,16 @@ spring:
               args:
                 name: networkServiceCB
                 fallbackUri: forward:/fallback/network-service
+
+        - id: admin-service-route
+          uri: lb://smart-mobility-adminBackend-service
+          predicates:
+            - Path=/admin/**
+          filters:
+            - name: CircuitBreaker
+              args:
+                name: adminServiceCB
+                fallbackUri: forward:/fallback/admin-service
 
 eureka:
   client:
