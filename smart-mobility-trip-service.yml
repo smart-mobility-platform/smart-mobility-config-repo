@@ -25,10 +25,18 @@ spring:
       hibernate:
         dialect: org.hibernate.dialect.MySQLDialect
 
+  # --- RabbitMQ : connexion au broker de messages ---
+  rabbitmq:
+    host: ${RABBITMQ_HOST:localhost}
+    port: ${RABBITMQ_PORT:5672}
+    username: ${RABBITMQ_USER:guest}
+    password: ${RABBITMQ_PASSWORD:guest}
+
 # --- Resilience4j : activer le circuit breaker Feign ---
 feign:
   circuitbreaker:
     enabled: true
+
 
 resilience4j:
   circuitbreaker:
@@ -66,4 +74,4 @@ management:
   endpoints:
     web:
       exposure:
-        include: health,info,circuitbreakers
+        include: health,info,metrics,prometheus,circuitbreakers,env

@@ -34,8 +34,8 @@ spring:
           # URI d'émission des tokens Keycloak.
           # Spring Security télécharge automatiquement le JWKS depuis
           # {issuer-uri}/.well-known/openid-configuration pour valider les JWT.
-          issuer-uri: ${KEYCLOAK_ISSUER_URI:http://localhost:9090/realms/smart-mobility}
+          #issuer-uri: ${KEYCLOAK_ISSUER_URI:http://localhost:9090/realms/smart-mobility}
 
           #si ngrok 
-          #issuer-uri: https://125b-154-125-133-41.ngrok-free.app/realms/smart-mobility
+          issuer-uri: https://3b6c-154-124-143-236.ngrok-free.app/realms/smart-mobility
 

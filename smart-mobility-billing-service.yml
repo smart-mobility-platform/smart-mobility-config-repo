@@ -25,6 +25,13 @@ spring:
       hibernate:
         dialect: org.hibernate.dialect.MySQLDialect
 
+  # --- RabbitMQ : connexion au broker de messages ---
+  rabbitmq:
+    host: ${RABBITMQ_HOST:localhost}
+    port: ${RABBITMQ_PORT:5672}
+    username: ${RABBITMQ_USER:guest}
+    password: ${RABBITMQ_PASSWORD:guest}
+
 # --- Seuil d'alerte solde faible (en FCFA) ---
 billing:
   low-balance-threshold: 500
@@ -64,4 +71,15 @@ management:
   endpoints:
     web:
       exposure:
-        include: health,info,circuitbreakers
+        include: health,info,metrics,prometheus,circuitbreakers
+
+paydunya:
+  master-key: wBRGbm0a-oJfE-rPde-5sxs-sGp29n0gidhC
+  private-key: test_private_hFuKyADuNb7DwjA8RIicC4LkvsE
+  token: onX8YemlrMeSNcR07PvB
+  sandbox: true
+  store-name: "Smart Mobility Pass"
+  callback-url: ${GATEWAY_URL:https://20bd-154-124-143-236.ngrok-free.app}/api/billing/recharge/callback
+  return-url: ${GATEWAY_URL:https://20bd-154-124-143-236.ngrok-free.app}/api/billing/recharge/return
+  cancel-url: ${GATEWAY_URL:https://20bd-154-124-143-236.ngrok-free.app}/api/billing/recharge/cancel
+
