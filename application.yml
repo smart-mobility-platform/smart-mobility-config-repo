@@ -10,20 +10,29 @@ eureka:
   client:
     # URL de l'annuaire Eureka que chaque service utilisera pour s'enregistrer
     service-url:
-      defaultZone: http://localhost:8761/eureka/
+      defaultZone: ${EUREKA_SERVER_URL:http://localhost:8761}/eureka/
 
 # --- Actuator : exposer les endpoints health & info par défaut ---
 management:
   endpoints:
     web:
       exposure:
-        include: health,info,metrics
+        include: health,info,metrics,prometheus
   endpoint:
     health:
       show-details: always
+    prometheus:
+      enabled: true
   tracing:
     sampling:
       probability: ${ZIPKIN_SAMPLING_PROBABILITY:1.0}
   zipkin:
     tracing:
       endpoint: ${ZIPKIN_BASE_URL:http://localhost:9411}/api/v2/spans
+  metrics:
+    tags:
+      application: ${spring.application.name}
+
+# --- Loki : URL pour l'envoi des logs ---
+loki:
+  url: ${LOKI_URL:http://localhost:3100}

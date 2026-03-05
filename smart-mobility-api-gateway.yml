@@ -44,7 +44,7 @@ spring:
         - id: user-service-route
           uri: lb://smart-mobility-user-service
           predicates:
-            - Path=/api/users/**, /api/mobility-pass/**
+            - Path=/api/users/**, /api/mobility-pass/**, /api/loyalty/**
           filters:
             - name: CircuitBreaker
               args:
@@ -118,7 +118,7 @@ spring:
 eureka:
   client:
     service-url:
-      defaultZone: http://localhost:8761/eureka/
+      defaultZone: ${EUREKA_SERVER_URL:http://localhost:8761}/eureka/
   instance:
     prefer-ip-address: true
 
