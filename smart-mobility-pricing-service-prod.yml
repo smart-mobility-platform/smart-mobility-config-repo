@@ -1,0 +1,32 @@
+# ============================================================
+# Profil PROD — Pricing Service
+# ============================================================
+
+spring:
+  datasource:
+    url: ${PRICING_DB_URL}
+    username: ${PRICING_DB_USER}
+    password: ${PRICING_DB_PASSWORD}
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    show-sql: false
+
+pricing:
+  base-fare: ${PRICING_BASE_FARE:500}
+  off-peak-discount: ${PRICING_OFF_PEAK_DISCOUNT:0.20}
+  daily-cap: ${PRICING_DAILY_CAP:3000}
+  loyalty-threshold: ${PRICING_LOYALTY_THRESHOLD:20}
+  loyalty-discount: ${PRICING_LOYALTY_DISCOUNT:0.15}
+
+resilience4j:
+  circuitbreaker:
+    configs:
+      default:
+        slidingWindowSize: 10
+        waitDurationInOpenState: 15s
+
+logging:
+  level:
+    com.smartmobility.pricing: INFO
+    org.hibernate.SQL: WARN

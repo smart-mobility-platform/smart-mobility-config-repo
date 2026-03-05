@@ -1,0 +1,25 @@
+# ============================================================
+# Profil PROD — User & Mobility Pass Service
+# Toutes les valeurs sensibles via variables d'environnement.
+# ============================================================
+
+spring:
+  datasource:
+    url: ${USER_DB_URL}
+    username: ${USER_DB_USER}
+    password: ${USER_DB_PASSWORD}
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    show-sql: false
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: ${KEYCLOAK_ISSUER_URI}
+
+logging:
+  level:
+    com.smartmobility.user: INFO
+    org.hibernate.SQL: WARN
+    org.springframework.security: WARN

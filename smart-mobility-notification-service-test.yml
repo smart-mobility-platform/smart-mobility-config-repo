@@ -1,0 +1,23 @@
+# ============================================================
+# Profil TEST — Notification Service
+# E-mail désactivé ; les tests utilisent un JavaMailSender
+# mock pour éviter tout envoi réel.
+# ============================================================
+
+spring:
+  mail:
+    host: localhost
+    port: 3025
+    username: test
+    password: test
+    properties:
+      mail:
+        smtp:
+          auth: false
+          starttls:
+            enable: false
+
+logging:
+  level:
+    com.smartmobility.notification: DEBUG
+    org.springframework.mail: WARN

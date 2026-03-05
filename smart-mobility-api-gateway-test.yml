@@ -1,0 +1,19 @@
+# ============================================================
+# Profil TEST — API Gateway
+# ============================================================
+
+eureka:
+  client:
+    enabled: false
+
+spring:
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: false
+
+logging:
+  level:
+    org.springframework.cloud.gateway: INFO
+    reactor.netty: WARN
