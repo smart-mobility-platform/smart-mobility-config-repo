@@ -37,5 +37,5 @@ spring:
           #issuer-uri: ${KEYCLOAK_ISSUER_URI:http://localhost:9090/realms/smart-mobility}
 
           #si ngrok 
-          issuer-uri: https://3b6c-154-124-143-236.ngrok-free.app/realms/smart-mobility
+          issuer-uri: https://25ae-154-125-65-72.ngrok-free.app/realms/smart-mobility
 
