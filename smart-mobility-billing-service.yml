@@ -79,7 +79,7 @@ paydunya:
   token: onX8YemlrMeSNcR07PvB
   sandbox: true
   store-name: "Smart Mobility Pass"
-  callback-url: ${GATEWAY_URL:https://20bd-154-124-143-236.ngrok-free.app}/api/billing/recharge/callback
-  return-url: ${GATEWAY_URL:https://20bd-154-124-143-236.ngrok-free.app}/api/billing/recharge/return
-  cancel-url: ${GATEWAY_URL:https://20bd-154-124-143-236.ngrok-free.app}/api/billing/recharge/cancel
+  callback-url: ${GATEWAY_URL:https://b11c-154-125-65-72.ngrok-free.app}/api/billing/recharge/callback
+  return-url: ${GATEWAY_URL:https://b11c-154-125-65-72.ngrok-free.app}/api/billing/recharge/return
+  cancel-url: ${GATEWAY_URL:https://b11c-154-125-65-72.ngrok-free.app}/api/billing/recharge/cancel
 
