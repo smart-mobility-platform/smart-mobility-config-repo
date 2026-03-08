@@ -9,9 +9,11 @@ eureka:
 spring:
   cloud:
     gateway:
-      discovery:
-        locator:
-          enabled: false
+      server:
+        webflux:
+          discovery:
+            locator:
+              enabled: false
 
 logging:
   level:

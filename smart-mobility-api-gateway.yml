@@ -13,107 +13,106 @@ spring:
 
   cloud:
     gateway:
-      discovery:
-        locator:
-          enabled: true
-          lower-case-service-id: true
+      server:
+        webflux:
+          discovery:
+            locator:
+              enabled: true
+              lower-case-service-id: true
 
-      # --- CORS global ---
-      globalcors:
-        cors-configurations:
-          '[/**]':
-            allowedOriginPatterns: "*"
-            allowedMethods:
-              - GET
-              - POST
-              - PUT
-              - DELETE
-              - OPTIONS
-            allowedHeaders: "*"
-            allowCredentials: true
+          # --- CORS global ---
+          globalcors:
+            cors-configurations:
+              '[/**]':
+                allowedOriginPatterns: "*"
+                allowedMethods:
+                  - GET
+                  - POST
+                  - PUT
+                  - DELETE
+                  - OPTIONS
+                allowedHeaders: "*"
+                allowCredentials: true
 
-      # --- Filtre par défaut : dédoublonner les en-têtes CORS ---
-      # Le gateway et les microservices ajoutent chacun Access-Control-Allow-Origin,
-      # ce qui produit une valeur dupliquée (ex. "null, null"). Ce filtre ne conserve
-      # que la première occurrence avant d'envoyer la réponse au client.
-      default-filters:
-        - DedupeResponseHeader=Access-Control-Allow-Credentials Access-Control-Allow-Origin
+          # --- Filtre par défaut : dédoublonner les en-têtes CORS ---
+          default-filters:
+            - DedupeResponseHeader=Access-Control-Allow-Credentials Access-Control-Allow-Origin
 
-      # --- Routes vers chaque microservice ---
-      routes:
-        - id: user-service-route
-          uri: lb://smart-mobility-user-service
-          predicates:
-            - Path=/api/users/**, /api/mobility-pass/**, /api/loyalty/**
-          filters:
-            - name: CircuitBreaker
-              args:
-                name: userServiceCB
-                fallbackUri: forward:/fallback/user-service
+          # --- Routes vers chaque microservice ---
+          routes:
+            - id: user-service-route
+              uri: lb://smart-mobility-user-service
+              predicates:
+                - Path=/api/users/**, /api/mobility-pass/**, /api/loyalty/**
+              filters:
+                - name: CircuitBreaker
+                  args:
+                    name: userServiceCB
+                    fallbackUri: forward:/fallback/user-service
 
-        - id: trip-service-route
-          uri: lb://smart-mobility-trip-service
-          predicates:
-            - Path=/api/trips/**
-          filters:
-            - RewritePath=/api/(?<remaining>.*), /${remaining}
-            - name: CircuitBreaker
-              args:
-                name: tripServiceCB
-                fallbackUri: forward:/fallback/trip-service
+            - id: trip-service-route
+              uri: lb://smart-mobility-trip-service
+              predicates:
+                - Path=/api/trips/**
+              filters:
+                - RewritePath=/api/(?<remaining>.*), /${remaining}
+                - name: CircuitBreaker
+                  args:
+                    name: tripServiceCB
+                    fallbackUri: forward:/fallback/trip-service
 
-        - id: pricing-service-route
-          uri: lb://smart-mobility-pricing-service
-          predicates:
-            - Path=/api/pricing/**, /api/fare-rules/**, /api/discounts/**
-          filters:
-            - RewritePath=/api/(?<remaining>.*), /${remaining}
-            - name: CircuitBreaker
-              args:
-                name: pricingServiceCB
-                fallbackUri: forward:/fallback/pricing-service
+            - id: pricing-service-route
+              uri: lb://smart-mobility-pricing-service
+              predicates:
+                - Path=/api/pricing/**, /api/fare-rules/**, /api/discounts/**
+              filters:
+                - RewritePath=/api/(?<remaining>.*), /${remaining}
+                - name: CircuitBreaker
+                  args:
+                    name: pricingServiceCB
+                    fallbackUri: forward:/fallback/pricing-service
 
-        - id: billing-service-route
-          uri: lb://smart-mobility-billing-service
-          predicates:
-            - Path=/api/billing/**
-          filters:
-            - RewritePath=/api/(?<remaining>.*), /${remaining}
-            - name: CircuitBreaker
-              args:
-                name: billingServiceCB
-                fallbackUri: forward:/fallback/billing-service
+            - id: billing-service-route
+              uri: lb://smart-mobility-billing-service
+              predicates:
+                - Path=/api/billing/**
+              filters:
+                - RewritePath=/api/(?<remaining>.*), /${remaining}
+                - name: CircuitBreaker
+                  args:
+                    name: billingServiceCB
+                    fallbackUri: forward:/fallback/billing-service
 
-        - id: notification-service-route
-          uri: lb://smart-mobility-notification-service
-          predicates:
-            - Path=/api/notifications/**
-          filters:
-            - name: CircuitBreaker
-              args:
-                name: notificationServiceCB
-                fallbackUri: forward:/fallback/notification-service
+            - id: notification-service-route
+              uri: lb://smart-mobility-notification-service
+              predicates:
+                - Path=/api/notifications/**
+              filters:
+                - name: CircuitBreaker
+                  args:
+                    name: notificationServiceCB
+                    fallbackUri: forward:/fallback/notification-service
 
-        - id: network-service-route
-          uri: lb://smart-mobility-network-service
-          predicates:
-            - Path=/api/network/**
-          filters:
-            - RewritePath=/api/network/(?<remaining>.*), /${remaining}
-            - name: CircuitBreaker
-              args:
-                name: networkServiceCB
-                fallbackUri: forward:/fallback/network-service
+            - id: network-service-route
+              uri: lb://smart-mobility-network-service
+              predicates:
+                - Path=/api/network/**
+              filters:
+                - RewritePath=/api/network/(?<remaining>.*), /${remaining}
+                - name: CircuitBreaker
+                  args:
+                    name: networkServiceCB
+                    fallbackUri: forward:/fallback/network-service
 
-        - id: admin-service-route
-          uri: lb://smart-mobility-adminBackend-service
-          predicates:
-            - Path=/admin/**
-          filters:
-            - name: CircuitBreaker
-              args:
-                name: adminServiceCB
-                fallbackUri: forward:/fallback/admin-service
+            - id: admin-service-route
+              uri: lb://smart-mobility-adminBackend-service
+              predicates:
+                - Path=/admin/**
+              filters:
+                - name: CircuitBreaker
+                  args:
+                    name: adminServiceCB
+                    fallbackUri: forward:/fallback/admin-service
 
 eureka:
   client:

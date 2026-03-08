@@ -31,11 +31,18 @@ spring:
     oauth2:
       resourceserver:
         jwt:
-          # URI d'émission des tokens Keycloak.
-          # Spring Security télécharge automatiquement le JWKS depuis
-          # {issuer-uri}/.well-known/openid-configuration pour valider les JWT.
+          # jwk-set-uri pointe directement vers Keycloak en localhost.
+          # Avantage : fonctionne quel que soit l'URL ngrok utilisé pour s'authentifier
+          # (pas de validation de l'issuer → pas de mismatch ngrok).
+          jwk-set-uri: ${KEYCLOAK_JWK_SET_URI:http://localhost:9090/realms/smart-mobility/protocol/openid-connect/certs}
+          # issuer-uri désactivé : il changeait à chaque redémarrage d'ngrok
           #issuer-uri: ${KEYCLOAK_ISSUER_URI:http://localhost:9090/realms/smart-mobility}
 
-          #si ngrok 
-          issuer-uri: https://3b6c-154-124-143-236.ngrok-free.app/realms/smart-mobility
+# ── Keycloak Admin Client (service account for user management) ──
+keycloak:
+  admin:
+    server-url: ${KEYCLOAK_ADMIN_URL:https://8082-154-124-236-253.ngrok-free.app}
+    realm: ${KEYCLOAK_REALM:smart-mobility}
+    client-id: ${KEYCLOAK_ADMIN_CLIENT_ID:smart-mobility-admin-service}
+    client-secret: WuSmptQnNA0XPZ4tvdZR46TDWCAfZE7e
 

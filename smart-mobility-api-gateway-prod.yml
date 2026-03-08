@@ -12,11 +12,13 @@ eureka:
 spring:
   cloud:
     gateway:
-      globalcors:
-        cors-configurations:
-          '[/**]':
-            allowedOriginPatterns: ${ALLOWED_ORIGINS:https://smart-mobility.example.com}
-            allowCredentials: true
+      server:
+        webflux:
+          globalcors:
+            cors-configurations:
+              '[/**]':
+                allowedOriginPatterns: ${ALLOWED_ORIGINS:https://smart-mobility.example.com}
+                allowCredentials: true
 
 resilience4j:
   circuitbreaker:
